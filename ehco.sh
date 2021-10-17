@@ -83,12 +83,12 @@ function Install_Ehco() {
 	Install_Dependence
 	if [ ! -f "/usr/bin/ehco" ]; then
 		echo -e "${Info} 开始安装Ehco"
-		Ehco_NewVer=$(wget -qO- https://github-api.weifeng.workers.dev/repos/Ehco1996/ehco/releases| grep "tag_name"| head -n 1| awk -F ":" '{print $2}'| sed 's/\"//g;s/,//g;s/ //g;s/v//g')
+		Ehco_NewVer=$(wget -qO- https://github.com/Ehco1996/ehco/releases| grep "tag_name"| head -n 1| awk -F ":" '{print $2}'| sed 's/\"//g;s/,//g;s/ //g;s/v//g')
 		mkdir /etc/ehco
 		if [[ ${Bit} == "amd64" ]]; then
-			wget -N --no-check-certificate "https://github.weifeng.workers.dev/https://github.com/Ehco1996/ehco/releases/download/v${Ehco_NewVer}/ehco_${Ehco_NewVer}_linux_amd64" -O ehco && chmod +x ehco && mv ehco ${Path_Dir}/ehco 
+			wget -N --no-check-certificate "https://github.com/Ehco1996/ehco/releases/download/v${Ehco_NewVer}/ehco_${Ehco_NewVer}_linux_amd64" -O ehco && chmod +x ehco && mv ehco ${Path_Dir}/ehco 
 		elif [[ ${Bit} == "arm64" ]]; then
-			wget -N --no-check-certificate "https://github.weifeng.workers.dev/https://github.com/Ehco1996/ehco/releases/download/v${Ehco_NewVer}/ehco_${Ehco_NewVer}_linux_arm64" -O ehco && chmod +x ehco && mv ehco ${Path_Dir}/ehco
+			wget -N --no-check-certificate "https://github.com/Ehco1996/ehco/releases/download/v${Ehco_NewVer}/ehco_${Ehco_NewVer}_linux_arm64" -O ehco && chmod +x ehco && mv ehco ${Path_Dir}/ehco
 		else
 			echo "${Error} 与Github交互失败，安装Ehco失败，即将终止运行脚本"
 			sleep 3s
@@ -108,8 +108,8 @@ function Download_Config() {
 		mkdir ${Path_Dir}
 		touch ${Path_Dir}/config.json
 	fi
-	wget -N --no-check-certificate "https://github.weifeng.workers.dev/https://github.com/wf-nb/EasyEhco/blob/latest/config.json" -O config.json && chmod +x config.json && mv config.json ${Path_Dir}/config.json
-	wget -N --no-check-certificate "https://github.weifeng.workers.dev/https://github.com/wf-nb/EasyEhco/blob/latest/config.json.example" -O config.json.example && chmod +x config.json.example && mv config.json.example ${Path_Dir}/config.json.example
+	wget -N --no-check-certificate "https://github.com/amcjcy/EasyEhco/raw/main/config.json" -O config.json && chmod +x config.json && mv config.json ${Path_Dir}/config.json
+	wget -N --no-check-certificate "https://github.com/amcjcy/EasyEhco/raw/main/config.json.example" -O config.json.example && chmod +x config.json.example && mv config.json.example ${Path_Dir}/config.json.example
 }
 
 #配置Ehco
@@ -151,7 +151,7 @@ function Update_Ehco() {
 	else
 		echo -e "${Info} 检测Ehco更新中"
 		Ehco_Version=$(ehco -v | awk -F " " '{print $3}')
-		Ehco_NewVer=$(wget -qO- https://github-api.weifeng.workers.dev/repos/Ehco1996/ehco/releases| grep "tag_name"| head -n 1| awk -F ":" '{print $2}'| sed 's/\"//g;s/,//g;s/ //g;s/v//g')
+		Ehco_NewVer=$(wget -qO- https://github.com/Ehco1996/ehco/releases| grep "tag_name"| head -n 1| awk -F ":" '{print $2}'| sed 's/\"//g;s/,//g;s/ //g;s/v//g')
 		if [[ ${Ehco_NewVer} == ${Ehco_Version} ]]; then
 			echo -e "${Info} 本地Ehco已是最新版本，无需更新，即将返回主菜单"
 			sleep 3s
@@ -159,10 +159,10 @@ function Update_Ehco() {
 		else
 			if [[ ${Bit} == "amd64" ]]; then
 				rm -rf ${Path_Dir}/ehco
-				wget -N --no-check-certificate "https://github.weifeng.workers.dev/https://github.com/Ehco1996/ehco/releases/download/v${Ehco_NewVer}/ehco_${Ehco_NewVer}_linux_amd64" -O ehco && chmod +x ehco && mv ehco ${Path_Dir}/ehco 
+				wget -N --no-check-certificate "https://github.com/Ehco1996/ehco/releases/download/v${Ehco_NewVer}/ehco_${Ehco_NewVer}_linux_amd64" -O ehco && chmod +x ehco && mv ehco ${Path_Dir}/ehco 
 			elif [[ ${Bit} == "arm64" ]]; then
 				rm -rf ${Path_Dir}/ehco
-				wget -N --no-check-certificate "https://github.weifeng.workers.dev/https://github.com/Ehco1996/ehco/releases/download/v${Ehco_NewVer}/ehco_${Ehco_NewVer}_linux_arm64" -O ehco && chmod +x ehco && mv ehco ${Path_Dir}/ehco
+				wget -N --no-check-certificate "https://github.com/Ehco1996/ehco/releases/download/v${Ehco_NewVer}/ehco_${Ehco_NewVer}_linux_arm64" -O ehco && chmod +x ehco && mv ehco ${Path_Dir}/ehco
 			else
 				echo "${Error} 与Github交互失败，更新Ehco失败，请检查网络设置"
 				exit 1
@@ -420,9 +420,9 @@ function Add_Relay() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要侦听哪个IP呢？"
 	echo -e "注: IP请填写所需的网卡IP, 全网口侦听请输入0.0.0.0"
-	read -p "请输入 默认127.0.0.1 " Read_Local_IP
+	read -p "请输入 默认0.0.0.0 " Read_Local_IP
 	if [ ! -n "$Read_Local_IP" ]; then
-		Read_Local_IP="127.0.0.1"
+		Read_Local_IP="0.0.0.0"
 	fi
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要侦听哪个端口呢？"
@@ -433,9 +433,9 @@ function Add_Relay() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要转发至哪个远程服务器IP或域名呢？"
 	echo -e "注: 既可以是[远程机器/当前机器]的公网IP，也可是以本地回环IP（即127.0.0.1）"
-	read -p "请输入 " Read_Remote_IP
+	read -p "请输入 默认127.0.0.1 " Read_Remote_IP
 	if [ ! -n "$Read_Remote_IP" ]; then
-		echo -e "${Error} 未输入远程服务器地址"
+		Read_Remote_IP="127.0.0.1"
 		exit 1
 	fi
     echo -e "------------------------------------------------------------------"
@@ -458,9 +458,9 @@ function Add_Encryptws() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要侦听哪个IP呢？"
 	echo -e "注: IP请填写所需的网卡IP, 全网口侦听请输入0.0.0.0"
-	read -p "请输入 默认127.0.0.1 " Read_Local_IP
+	read -p "请输入 默认0.0.0.0 " Read_Local_IP
 	if [ ! -n "$Read_Local_IP" ]; then
-		Read_Local_IP="127.0.0.1"
+		Read_Local_IP="0.0.0.0"
 	fi
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要加密哪个端口收到的流量呢？"
@@ -469,11 +469,11 @@ function Add_Encryptws() {
 		Read_Local_Port="23333"
 	fi
     echo -e "------------------------------------------------------------------"
-	echo -e "请问需要将[$Read_Local_Port]加密流量转发至哪个远程服务器IP或域名呢？"
-	echo -e "注: 请确认已在远程服务器上部署了隧道解密端"
-	read -p "请输入 " Read_Remote_IP
+	echo -e "请问需要转发至哪个远程服务器IP或域名呢？"
+	echo -e "注: 既可以是[远程机器/当前机器]的公网IP，也可是以本地回环IP（即127.0.0.1）"
+	read -p "请输入 默认127.0.0.1 " Read_Remote_IP
 	if [ ! -n "$Read_Remote_IP" ]; then
-		echo -e "${Error} 未输入远程服务器地址"
+		Read_Remote_IP="127.0.0.1"
 		exit 1
 	fi
     echo -e "------------------------------------------------------------------"
@@ -496,9 +496,9 @@ function Add_Encryptwss() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要侦听哪个IP呢？"
 	echo -e "注: IP请填写所需的网卡IP, 全网口侦听请输入0.0.0.0"
-	read -p "请输入 默认127.0.0.1 " Read_Local_IP
+	read -p "请输入 默认0.0.0.0 " Read_Local_IP
 	if [ ! -n "$Read_Local_IP" ]; then
-		Read_Local_IP="127.0.0.1"
+		Read_Local_IP="0.0.0.0"
 	fi
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要加密哪个端口收到的流量呢？"
@@ -507,11 +507,11 @@ function Add_Encryptwss() {
 		Read_Local_Port="23333"
 	fi
     echo -e "------------------------------------------------------------------"
-	echo -e "请问需要将[$Read_Local_Port]加密流量转发至哪个远程服务器IP或域名呢？"
-	echo -e "注: 请确认已在远程服务器上部署了隧道解密端"
-	read -p "请输入 " Read_Remote_IP
+	echo -e "请问需要转发至哪个远程服务器IP或域名呢？"
+	echo -e "注: 既可以是[远程机器/当前机器]的公网IP，也可是以本地回环IP（即127.0.0.1）"
+	read -p "请输入 默认127.0.0.1 " Read_Remote_IP
 	if [ ! -n "$Read_Remote_IP" ]; then
-		echo -e "${Error} 未输入远程服务器地址"
+		Read_Remote_IP="127.0.0.1"
 		exit 1
 	fi
     echo -e "------------------------------------------------------------------"
@@ -534,9 +534,9 @@ function Add_Encryptmwss() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要侦听哪个IP呢？"
 	echo -e "注: IP请填写所需的网卡IP, 全网口侦听请输入0.0.0.0"
-	read -p "请输入 默认127.0.0.1 " Read_Local_IP
+	read -p "请输入 默认0.0.0.0 " Read_Local_IP
 	if [ ! -n "$Read_Local_IP" ]; then
-		Read_Local_IP="127.0.0.1"
+		Read_Local_IP="0.0.0.0"
 	fi
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要加密哪个端口收到的流量呢？"
@@ -545,11 +545,11 @@ function Add_Encryptmwss() {
 		Read_Local_Port="23333"
 	fi
     echo -e "------------------------------------------------------------------"
-	echo -e "请问需要将[$Read_Local_Port]加密流量转发至哪个远程服务器IP或域名呢？"
-	echo -e "注: 请确认已在远程服务器上部署了隧道解密端"
-	read -p "请输入 " Read_Remote_IP
+	echo -e "请问需要转发至哪个远程服务器IP或域名呢？"
+	echo -e "注: 既可以是[远程机器/当前机器]的公网IP，也可是以本地回环IP（即127.0.0.1）"
+	read -p "请输入 默认127.0.0.1 " Read_Remote_IP
 	if [ ! -n "$Read_Remote_IP" ]; then
-		echo -e "${Error} 未输入远程服务器地址"
+		Read_Remote_IP="127.0.0.1"
 		exit 1
 	fi
     echo -e "------------------------------------------------------------------"
@@ -572,9 +572,9 @@ function Add_Decryptws() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要侦听哪个IP呢？"
 	echo -e "注: IP请填写所需的网卡IP, 全网口侦听请输入0.0.0.0"
-	read -p "请输入 默认127.0.0.1 " Read_Local_IP
+	read -p "请输入 默认0.0.0.0 " Read_Local_IP
 	if [ ! -n "$Read_Local_IP" ]; then
-		Read_Local_IP="127.0.0.1"
+		Read_Local_IP="0.0.0.0"
 	fi
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要解密哪个端口收到的流量呢？"
@@ -610,9 +610,9 @@ function Add_Decryptwss() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要侦听哪个IP呢？"
 	echo -e "注: IP请填写所需的网卡IP, 全网口侦听请输入0.0.0.0"
-	read -p "请输入 默认127.0.0.1 " Read_Local_IP
+	read -p "请输入 默认0.0.0.0 " Read_Local_IP
 	if [ ! -n "$Read_Local_IP" ]; then
-		Read_Local_IP="127.0.0.1"
+		Read_Local_IP="0.0.0.0"
 	fi
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要解密哪个端口收到的流量呢？"
@@ -648,9 +648,9 @@ function Add_Decryptmwss() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要侦听哪个IP呢？"
 	echo -e "注: IP请填写所需的网卡IP, 全网口侦听请输入0.0.0.0"
-	read -p "请输入 默认127.0.0.1 " Read_Local_IP
+	read -p "请输入 默认0.0.0.0 " Read_Local_IP
 	if [ ! -n "$Read_Local_IP" ]; then
-		Read_Local_IP="127.0.0.1"
+		Read_Local_IP="0.0.0.0"
 	fi
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要解密哪个端口收到的流量呢？"
@@ -829,14 +829,14 @@ function Del_Rule() {
 #更新脚本
 function Update_Shell() {
 	echo -e "${Info} 当前版本为 [ ${Shell_Version} ]，开始检测最新版本..."
-	Shell_NewVer=$(wget --no-check-certificate -qO- "https://github.weifeng.workers.dev/https://github.com/wf-nb/EasyEhco/blob/latest/ehco.sh"|grep 'Shell_Version="'|awk -F "=" '{print $NF}'|sed 's/\"//g'|head -1)
+	Shell_NewVer=$(wget --no-check-certificate -qO- "https://github.com/amcjcy/EasyEhco/blob/latest/ehco.sh"|grep 'Shell_Version="'|awk -F "=" '{print $NF}'|sed 's/\"//g'|head -1)
 	[[ -z ${Shell_NewVer} ]] && echo -e "${Error} 检测最新版本失败" && Show_Menu
 	if [ $(awk -v Shell_NewVer="$Shell_NewVer" -v Shell_Version="$Shell_Version"  'BEGIN{print(Shell_NewVer>Shell_Version)?"1":"0"}') ]; then
 		echo -e "${Info} 发现新版本[ ${Shell_NewVer} ]，是否更新？[Y/n]"
 		read -p "(默认: Y):" Read_YN
 		[[ -z "${Read_YN}" ]] && Read_YN="Y"
 		if [[ ${Read_YN} == [Yy] ]]; then
-			wget -N --no-check-certificate https://github.weifeng.workers.dev/https://github.com/wf-nb/EasyEhco/blob/latest/ehco.sh && chmod +x ehco.sh
+			wget -N --no-check-certificate https://github.com/amcjcy/EasyEhco/blob/latest/ehco.sh && chmod +x ehco.sh
 			echo -e "${Success} 脚本已更新为最新版本[ ${Shell_NewVer} ]"
             sleep 3s
             Show_Menu
