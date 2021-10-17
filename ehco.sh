@@ -585,9 +585,9 @@ function Add_Decryptws() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问你要将本机从[$Read_Local_Port]接收到的流量转发向哪个IP或域名？"
 	echo -e "注: IP既可以是[远程机器/当前机器]的公网IP, 也可是以本地回环IP（即127.0.0.1）"
-	read -p "请输入 " Read_Remote_IP
+	read -p "请输入 默认127.0.0.1 " Read_Remote_IP
 	if [ ! -n "$Read_Remote_IP" ]; then
-		echo -e "${Error} 未输入远程服务器地址"
+		Read_Remote_IP="127.0.0.1"
 		exit 1
 	fi
     echo -e "------------------------------------------------------------------"
@@ -623,9 +623,9 @@ function Add_Decryptwss() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问你要将本机从[$Read_Local_Port]接收到的流量转发向哪个IP或域名？"
 	echo -e "注: IP既可以是[远程机器/当前机器]的公网IP, 也可是以本地回环IP（即127.0.0.1）"
-	read -p "请输入 " Read_Remote_IP
+	read -p "请输入 默认127.0.0.1 " Read_Remote_IP
 	if [ ! -n "$Read_Remote_IP" ]; then
-		echo -e "${Error} 未输入远程服务器地址"
+		Read_Remote_IP="127.0.0.1"
 		exit 1
 	fi
     echo -e "------------------------------------------------------------------"
@@ -661,9 +661,9 @@ function Add_Decryptmwss() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问你要将本机从[$Read_Local_Port]接收到的流量转发向哪个IP或域名？"
 	echo -e "注: IP既可以是[远程机器/当前机器]的公网IP, 也可是以本地回环IP（即127.0.0.1）"
-	read -p "请输入 " Read_Remote_IP
+	read -p "请输入 默认127.0.0.1 " Read_Remote_IP
 	if [ ! -n "$Read_Remote_IP" ]; then
-		echo -e "${Error} 未输入远程服务器地址"
+		Read_Remote_IP="127.0.0.1"
 		exit 1
 	fi
     echo -e "------------------------------------------------------------------"
