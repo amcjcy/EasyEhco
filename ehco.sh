@@ -108,8 +108,8 @@ function Download_Config() {
 		mkdir ${Path_Dir}
 		touch ${Path_Dir}/config.json
 	fi
-	wget -N --no-check-certificate "https://github.weifeng.workers.dev/https://github.com/wf-nb/EasyEhco/blob/latest/config.json" -O config.json && chmod +x config.json && mv config.json ${Path_Dir}/config.json
-	wget -N --no-check-certificate "https://github.weifeng.workers.dev/https://github.com/wf-nb/EasyEhco/blob/latest/config.json.example" -O config.json.example && chmod +x config.json.example && mv config.json.example ${Path_Dir}/config.json.example
+	wget -N --no-check-certificate "https://github.com/amcjcy/EasyEhco/blob/main/config.json" -O config.json && chmod +x config.json && mv config.json ${Path_Dir}/config.json
+	wget -N --no-check-certificate "https://github.com/amcjcy/EasyEhco/blob/main/config.json.example" -O config.json.example && chmod +x config.json.example && mv config.json.example ${Path_Dir}/config.json.example
 }
 
 #配置Ehco
