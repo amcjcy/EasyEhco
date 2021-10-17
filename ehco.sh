@@ -83,7 +83,7 @@ function Install_Ehco() {
 	Install_Dependence
 	if [ ! -f "/usr/bin/ehco" ]; then
 		echo -e "${Info} 开始安装Ehco"
-		Ehco_NewVer=$(wget -qO- https://github.com/Ehco1996/ehco/releases| grep "tag_name"| head -n 1| awk -F ":" '{print $2}'| sed 's/\"//g;s/,//g;s/ //g;s/v//g')
+		Ehco_NewVer=$(wget -qO- https://github-api.weifeng.workers.dev/repos/Ehco1996/ehco/releases| grep "tag_name"| head -n 1| awk -F ":" '{print $2}'| sed 's/\"//g;s/,//g;s/ //g;s/v//g')
 		mkdir /etc/ehco
 		if [[ ${Bit} == "amd64" ]]; then
 			wget -N --no-check-certificate "https://github.com/Ehco1996/ehco/releases/download/v${Ehco_NewVer}/ehco_${Ehco_NewVer}_linux_amd64" -O ehco && chmod +x ehco && mv ehco ${Path_Dir}/ehco 
