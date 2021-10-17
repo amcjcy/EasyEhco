@@ -108,8 +108,8 @@ function Download_Config() {
 		mkdir ${Path_Dir}
 		touch ${Path_Dir}/config.json
 	fi
-	wget -N --no-check-certificate "https://github.com/amcjcy/EasyEhco/raw/main/config.json" -O config.json && chmod +x config.json && mv config.json ${Path_Dir}/config.json
-	wget -N --no-check-certificate "https://github.com/amcjcy/EasyEhco/raw/main/config.json.example" -O config.json.example && chmod +x config.json.example && mv config.json.example ${Path_Dir}/config.json.example
+	wget -N --no-check-certificate "https://github.weifeng.workers.dev/https://github.com/wf-nb/EasyEhco/blob/latest/config.json" -O config.json && chmod +x config.json && mv config.json ${Path_Dir}/config.json
+	wget -N --no-check-certificate "https://github.weifeng.workers.dev/https://github.com/wf-nb/EasyEhco/blob/latest/config.json.example" -O config.json.example && chmod +x config.json.example && mv config.json.example ${Path_Dir}/config.json.example
 }
 
 #配置Ehco
@@ -420,9 +420,9 @@ function Add_Relay() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要侦听哪个IP呢？"
 	echo -e "注: IP请填写所需的网卡IP, 全网口侦听请输入0.0.0.0"
-	read -p "请输入 默认0.0.0.0 " Read_Local_IP
+	read -p "请输入 默认127.0.0.1 " Read_Local_IP
 	if [ ! -n "$Read_Local_IP" ]; then
-		Read_Local_IP="0.0.0.0"
+		Read_Local_IP="127.0.0.1"
 	fi
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要侦听哪个端口呢？"
@@ -433,9 +433,9 @@ function Add_Relay() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要转发至哪个远程服务器IP或域名呢？"
 	echo -e "注: 既可以是[远程机器/当前机器]的公网IP，也可是以本地回环IP（即127.0.0.1）"
-	read -p "请输入 默认127.0.0.1 " Read_Remote_IP
+	read -p "请输入 " Read_Remote_IP
 	if [ ! -n "$Read_Remote_IP" ]; then
-		Read_Remote_IP="127.0.0.1"
+		echo -e "${Error} 未输入远程服务器地址"
 		exit 1
 	fi
     echo -e "------------------------------------------------------------------"
@@ -458,9 +458,9 @@ function Add_Encryptws() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要侦听哪个IP呢？"
 	echo -e "注: IP请填写所需的网卡IP, 全网口侦听请输入0.0.0.0"
-	read -p "请输入 默认0.0.0.0 " Read_Local_IP
+	read -p "请输入 默认127.0.0.1 " Read_Local_IP
 	if [ ! -n "$Read_Local_IP" ]; then
-		Read_Local_IP="0.0.0.0"
+		Read_Local_IP="127.0.0.1"
 	fi
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要加密哪个端口收到的流量呢？"
@@ -469,11 +469,11 @@ function Add_Encryptws() {
 		Read_Local_Port="23333"
 	fi
     echo -e "------------------------------------------------------------------"
-	echo -e "请问需要转发至哪个远程服务器IP或域名呢？"
-	echo -e "注: 既可以是[远程机器/当前机器]的公网IP，也可是以本地回环IP（即127.0.0.1）"
-	read -p "请输入 默认127.0.0.1 " Read_Remote_IP
+	echo -e "请问需要将[$Read_Local_Port]加密流量转发至哪个远程服务器IP或域名呢？"
+	echo -e "注: 请确认已在远程服务器上部署了隧道解密端"
+	read -p "请输入 " Read_Remote_IP
 	if [ ! -n "$Read_Remote_IP" ]; then
-		Read_Remote_IP="127.0.0.1"
+		echo -e "${Error} 未输入远程服务器地址"
 		exit 1
 	fi
     echo -e "------------------------------------------------------------------"
@@ -496,9 +496,9 @@ function Add_Encryptwss() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要侦听哪个IP呢？"
 	echo -e "注: IP请填写所需的网卡IP, 全网口侦听请输入0.0.0.0"
-	read -p "请输入 默认0.0.0.0 " Read_Local_IP
+	read -p "请输入 默认127.0.0.1 " Read_Local_IP
 	if [ ! -n "$Read_Local_IP" ]; then
-		Read_Local_IP="0.0.0.0"
+		Read_Local_IP="127.0.0.1"
 	fi
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要加密哪个端口收到的流量呢？"
@@ -507,11 +507,11 @@ function Add_Encryptwss() {
 		Read_Local_Port="23333"
 	fi
     echo -e "------------------------------------------------------------------"
-	echo -e "请问需要转发至哪个远程服务器IP或域名呢？"
-	echo -e "注: 既可以是[远程机器/当前机器]的公网IP，也可是以本地回环IP（即127.0.0.1）"
-	read -p "请输入 默认127.0.0.1 " Read_Remote_IP
+	echo -e "请问需要将[$Read_Local_Port]加密流量转发至哪个远程服务器IP或域名呢？"
+	echo -e "注: 请确认已在远程服务器上部署了隧道解密端"
+	read -p "请输入 " Read_Remote_IP
 	if [ ! -n "$Read_Remote_IP" ]; then
-		Read_Remote_IP="127.0.0.1"
+		echo -e "${Error} 未输入远程服务器地址"
 		exit 1
 	fi
     echo -e "------------------------------------------------------------------"
@@ -534,9 +534,9 @@ function Add_Encryptmwss() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要侦听哪个IP呢？"
 	echo -e "注: IP请填写所需的网卡IP, 全网口侦听请输入0.0.0.0"
-	read -p "请输入 默认0.0.0.0 " Read_Local_IP
+	read -p "请输入 默认127.0.0.1 " Read_Local_IP
 	if [ ! -n "$Read_Local_IP" ]; then
-		Read_Local_IP="0.0.0.0"
+		Read_Local_IP="127.0.0.1"
 	fi
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要加密哪个端口收到的流量呢？"
@@ -545,11 +545,11 @@ function Add_Encryptmwss() {
 		Read_Local_Port="23333"
 	fi
     echo -e "------------------------------------------------------------------"
-	echo -e "请问需要转发至哪个远程服务器IP或域名呢？"
-	echo -e "注: 既可以是[远程机器/当前机器]的公网IP，也可是以本地回环IP（即127.0.0.1）"
-	read -p "请输入 默认127.0.0.1 " Read_Remote_IP
+	echo -e "请问需要将[$Read_Local_Port]加密流量转发至哪个远程服务器IP或域名呢？"
+	echo -e "注: 请确认已在远程服务器上部署了隧道解密端"
+	read -p "请输入 " Read_Remote_IP
 	if [ ! -n "$Read_Remote_IP" ]; then
-		Read_Remote_IP="127.0.0.1"
+		echo -e "${Error} 未输入远程服务器地址"
 		exit 1
 	fi
     echo -e "------------------------------------------------------------------"
@@ -588,7 +588,6 @@ function Add_Decryptws() {
 	read -p "请输入 默认127.0.0.1 " Read_Remote_IP
 	if [ ! -n "$Read_Remote_IP" ]; then
 		Read_Remote_IP="127.0.0.1"
-		exit 1
 	fi
     echo -e "------------------------------------------------------------------"
 	echo -e "请问你要将本机从[$Read_Local_Port]接收到的流量转发向[$Read_Remote_IP]的哪个端口呢？"
@@ -610,9 +609,9 @@ function Add_Decryptwss() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要侦听哪个IP呢？"
 	echo -e "注: IP请填写所需的网卡IP, 全网口侦听请输入0.0.0.0"
-	read -p "请输入 默认0.0.0.0 " Read_Local_IP
+	read -p "请输入 默认127.0.0.1 " Read_Local_IP
 	if [ ! -n "$Read_Local_IP" ]; then
-		Read_Local_IP="0.0.0.0"
+		Read_Local_IP="127.0.0.1"
 	fi
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要解密哪个端口收到的流量呢？"
@@ -623,9 +622,9 @@ function Add_Decryptwss() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问你要将本机从[$Read_Local_Port]接收到的流量转发向哪个IP或域名？"
 	echo -e "注: IP既可以是[远程机器/当前机器]的公网IP, 也可是以本地回环IP（即127.0.0.1）"
-	read -p "请输入 默认127.0.0.1 " Read_Remote_IP
+	read -p "请输入 " Read_Remote_IP
 	if [ ! -n "$Read_Remote_IP" ]; then
-		Read_Remote_IP="127.0.0.1"
+		echo -e "${Error} 未输入远程服务器地址"
 		exit 1
 	fi
     echo -e "------------------------------------------------------------------"
@@ -648,9 +647,9 @@ function Add_Decryptmwss() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要侦听哪个IP呢？"
 	echo -e "注: IP请填写所需的网卡IP, 全网口侦听请输入0.0.0.0"
-	read -p "请输入 默认0.0.0.0 " Read_Local_IP
+	read -p "请输入 默认127.0.0.1 " Read_Local_IP
 	if [ ! -n "$Read_Local_IP" ]; then
-		Read_Local_IP="0.0.0.0"
+		Read_Local_IP="127.0.0.1"
 	fi
     echo -e "------------------------------------------------------------------"
 	echo -e "请问需要解密哪个端口收到的流量呢？"
@@ -661,9 +660,9 @@ function Add_Decryptmwss() {
     echo -e "------------------------------------------------------------------"
 	echo -e "请问你要将本机从[$Read_Local_Port]接收到的流量转发向哪个IP或域名？"
 	echo -e "注: IP既可以是[远程机器/当前机器]的公网IP, 也可是以本地回环IP（即127.0.0.1）"
-	read -p "请输入 默认127.0.0.1 " Read_Remote_IP
+	read -p "请输入 " Read_Remote_IP
 	if [ ! -n "$Read_Remote_IP" ]; then
-		Read_Remote_IP="127.0.0.1"
+		echo -e "${Error} 未输入远程服务器地址"
 		exit 1
 	fi
     echo -e "------------------------------------------------------------------"
